@@ -9,6 +9,7 @@ import {
     ScrollRestoration,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
+import Header from "./components/header";
 
 export const links: LinksFunction = () => [
     { rel: "stylesheet", href: styles },
@@ -17,7 +18,7 @@ export const links: LinksFunction = () => [
 
 export default function App() {
     return (
-        <html lang="en">
+        <html lang="ja">
             <head>
                 <meta charSet="utf-8" />
                 <meta
@@ -27,8 +28,17 @@ export default function App() {
                 <Meta />
                 <Links />
             </head>
-            <body>
-                <Outlet />
+            <body className="font-sans">
+                <div className="flex flex-col h-screen">
+                    <div>
+                        <Header />
+                    </div>
+
+                    <div className="flex-grow">
+                        <Outlet />
+                    </div>
+                </div>
+
                 <ScrollRestoration />
                 <Scripts />
                 <LiveReload />

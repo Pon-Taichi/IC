@@ -7,6 +7,8 @@ import {
     Outlet,
     Scripts,
     ScrollRestoration,
+    json,
+    useLoaderData,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
 import Header from "./components/header";
@@ -16,7 +18,23 @@ export const links: LinksFunction = () => [
     ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
+export const loader = () => {
+    const menuList = [
+        { name: "ダッシュボード", href: "/" },
+        { name: "プロジェクト", href: "/projects" },
+        {
+            name: "入力",
+            href: "/input",
+        },
+        { name: "レポート", href: "/reports" },
+        { name: "設定", href: "/settings" },
+    ];
+    return json({ menuList });
+};
+
 export default function App() {
+    const { menuList } = useLoaderData<typeof loader>();
+
     return (
         <html lang="ja">
             <head>
@@ -31,7 +49,7 @@ export default function App() {
             <body className="font-sans">
                 <div className="flex flex-col h-screen">
                     <div>
-                        <Header />
+                        <Header menuList={menuList} />
                     </div>
 
                     <div className="flex-grow">

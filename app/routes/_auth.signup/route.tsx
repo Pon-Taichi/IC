@@ -31,9 +31,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
-        options: {
-            emailRedirectTo: "/auth/callback",
-        },
     });
 
     if (error) {

@@ -43,7 +43,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function Signup() {
     const errors = useActionData<typeof action>();
-    console.log(JSON.stringify(errors));
 
     return (
         <div className="container w-1/3">

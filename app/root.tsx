@@ -29,7 +29,6 @@ export default function App() {
             </head>
             <body className="font-sans">
                 <Outlet />
-
                 <ScrollRestoration />
                 <Scripts />
                 <LiveReload />

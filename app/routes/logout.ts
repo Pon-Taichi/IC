@@ -5,12 +5,11 @@ import { supabaseServerClient } from "~/supabase.server";
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const cookies = parse(request.headers.get("Cookie") ?? "");
     const headers = new Headers();
+
     const supabase = supabaseServerClient(cookies, headers);
+    await supabase.auth.signOut();
 
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
-        return redirect("/");
-    }
+    console.log(headers);
 
-    return null;
+    return redirect("/login", { headers });
 };

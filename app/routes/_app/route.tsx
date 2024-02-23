@@ -1,14 +1,11 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { parse } from "@supabase/ssr";
 import Header from "~/routes/_app/header";
-import { supabaseServerClient } from "~/supabase.server";
+import { createClient } from "~/utils/supabase.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-    const cookies = parse(request.headers.get("Cookie") ?? "");
     const headers = new Headers();
-
-    const supabase = supabaseServerClient(cookies, headers);
+    const supabase = createClient(request, headers);
 
     const { data, error } = await supabase.auth.getSession();
 
@@ -18,12 +15,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
     const menuList = [
         { name: "ダッシュボード", href: "/" },
-        { name: "プロジェクト", href: "/projects" },
         {
-            name: "入力",
-            href: "/input",
+            name: "データ入力",
+            href: "/core",
         },
+        { name: "連結決算", href: "/consolidates" },
         { name: "レポート", href: "/reports" },
+
         { name: "設定", href: "/settings" },
     ];
     return { menuList };

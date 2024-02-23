@@ -1,17 +1,14 @@
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
-import { parse } from "@supabase/ssr";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { supabaseServerClient } from "~/supabase.server";
 import { validate } from "./validate";
+import { createClient } from "~/utils/supabase.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-    const cookies = parse(request.headers.get("Cookie") ?? "");
     const headers = new Headers();
-
-    const supabase = supabaseServerClient(cookies, headers);
+    const supabase = createClient(request, headers);
 
     const formData = await request.formData();
     const email = String(formData.get("email"));

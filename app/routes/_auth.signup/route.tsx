@@ -4,15 +4,12 @@ import {} from "@supabase/supabase-js";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { supabaseServerClient } from "~/supabase.server";
 import { validate } from "./validate";
-import { parse } from "@supabase/ssr";
+import { createClient } from "~/utils/supabase.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-    const cookies = parse(request.headers.get("Cookie") ?? "");
     const headers = new Headers();
-
-    const supabase = supabaseServerClient(cookies, headers);
+    const supabase = createClient(request, headers);
 
     const formData = await request.formData();
     const email = String(formData.get("email"));
@@ -31,6 +28,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
+        options: {
+            emailRedirectTo: process.env.SUPABASE_REDIRECT_URL,
+            data: {
+                tenant: 1,
+            },
+        },
     });
 
     if (error) {
@@ -38,7 +41,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         return errors;
     }
 
-    return redirect("/signup/success");
+    return redirect("/signup/success", { headers });
 };
 
 export default function Signup() {

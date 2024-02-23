@@ -2,10 +2,7 @@ import { MetaFunction } from "@remix-run/node";
 import { SubMenu } from "~/routes/_app/submenu";
 
 export const meta: MetaFunction = () => {
-    return [
-        { title: "プロジェクト" },
-        { name: "description", content: "プロジェクト一覧" },
-    ];
+    return [{ title: "連結決算" }];
 };
 
 export default function Projects() {
@@ -13,7 +10,7 @@ export default function Projects() {
         <div className="flex h-full">
             <SubMenu />
             <div className="container">
-                <h1>プロジェクト</h1>
+                <h1>連結決算</h1>
             </div>
         </div>
     );

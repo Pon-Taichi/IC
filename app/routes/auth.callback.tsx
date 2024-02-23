@@ -1,6 +1,5 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
-import { parse } from "@supabase/ssr";
-import { supabaseServerClient } from "~/supabase.server";
+import { createClient } from "~/utils/supabase.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
     const requestUrl = new URL(request.url);
@@ -9,8 +8,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     const headers = new Headers();
 
     if (code) {
-        const cookies = parse(request.headers.get("Cookie") ?? "");
-        const supabase = supabaseServerClient(cookies, headers);
+        const supabase = createClient(request, headers);
 
         const { error } = await supabase.auth.exchangeCodeForSession(code);
 

@@ -1,5 +1,5 @@
 import { MetaFunction } from "@remix-run/node";
-import { SubMenu } from "~/routes/_app/submenu";
+import SubMenu from "~/routes/_app/submenu";
 
 export const meta: MetaFunction = () => {
     return [{ title: "連結決算" }];
@@ -8,7 +8,7 @@ export const meta: MetaFunction = () => {
 export default function Projects() {
     return (
         <div className="flex h-full">
-            <SubMenu />
+            <SubMenu submenuList={[]} />
             <div className="container">
                 <h1>連結決算</h1>
             </div>

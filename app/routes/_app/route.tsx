@@ -15,14 +15,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
     const menuList = [
         { name: "ダッシュボード", href: "/" },
+        { name: "マスタ", href: "/master" },
         {
             name: "データ入力",
             href: "/core",
         },
         { name: "連結決算", href: "/consolidates" },
-        { name: "レポート", href: "/reports" },
+        // { name: "レポート", href: "/reports" },
 
-        { name: "設定", href: "/settings" },
+        // { name: "設定", href: "/settings" },
     ];
     return { menuList };
 };

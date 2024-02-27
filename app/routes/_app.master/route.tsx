@@ -1,21 +1,17 @@
-import { MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import SubMenu from "~/routes/_app/submenu";
 
-export const meta: MetaFunction = () => {
-    return [{ title: "データ入力" }];
-};
-
 export const loader = () => {
     const submenuList = [
-        { name: "データ", href: "#" },
-        { name: "マスタ", href: "#" },
+        { name: "基本設定", href: "/master" },
+        { name: "収集プロジェクト", href: "/master/core" },
+        { name: "決算プロジェクト", href: "/master/consolidates" },
     ];
 
     return { submenuList };
 };
 
-export default function Core() {
+export default function Master() {
     const { submenuList } = useLoaderData<typeof loader>();
 
     return (

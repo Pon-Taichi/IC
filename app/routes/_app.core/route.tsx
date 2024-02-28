@@ -8,8 +8,8 @@ export const meta: MetaFunction = () => {
 
 export const loader = () => {
     const submenuList = [
-        { name: "データ", href: "#" },
-        { name: "マスタ", href: "#" },
+        { name: "財務数値", href: "#" },
+        { name: "グループ内取引", href: "#" },
     ];
 
     return { submenuList };

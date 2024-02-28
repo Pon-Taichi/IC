@@ -8,6 +8,7 @@
         "build": "remix vite:build",
         "start": "remix-serve ./build/server/index.js",
         "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+        "gen:schema": "drizzle-kit introspect:pg",
         "typecheck": "tsc"
     },
     "dependencies": {
@@ -21,8 +22,10 @@
         "@supabase/supabase-js": "^2.39.3",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
+        "drizzle-orm": "^0.29.4",
         "isbot": "^4.1.0",
         "lucide-react": "^0.309.0",
+        "postgres": "^3.4.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "tailwind-merge": "^2.2.0",
@@ -34,6 +37,7 @@
         "@types/react-dom": "^18.2.7",
         "@typescript-eslint/eslint-plugin": "^6.7.4",
         "autoprefixer": "^10.4.16",
+        "drizzle-kit": "^0.20.14",
         "eslint": "^8.38.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-import-resolver-typescript": "^3.6.1",

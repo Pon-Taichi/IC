@@ -1,19 +1,21 @@
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { Form, Link, useActionData } from "@remix-run/react";
+import {
+    ClientActionFunctionArgs,
+    Form,
+    Link,
+    useActionData,
+    redirect,
+} from "@remix-run/react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { validate } from "./validate";
-import { createClient } from "~/utils/supabase.server";
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-    const headers = new Headers();
-    const supabase = createClient(request, headers);
-
+export const clientAction = async ({ request }: ClientActionFunctionArgs) => {
     const formData = await request.formData();
     const email = String(formData.get("email"));
     const password = String(formData.get("password"));
 
+    // eslint-disable-next-line prefer-const
     let errors: {
         email?: string;
         password?: string;
@@ -22,20 +24,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     if (errors) return errors;
 
-    const { error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-    });
-
-    if (error) {
-        errors = { supabase: error.message };
-        return errors;
-    }
-    return redirect("/", { headers });
+    return redirect("/");
 };
 
 export default function Login() {
-    const errors = useActionData<typeof action>();
+    const errors = useActionData<typeof clientAction>();
 
     return (
         <div className="container w-1/3">

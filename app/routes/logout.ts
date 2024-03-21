@@ -1,10 +1,5 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { createClient } from "~/utils/supabase.server";
+import { redirect } from "@remix-run/react";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-    const headers = new Headers();
-    const supabase = createClient(request, headers);
-    await supabase.auth.signOut();
-
-    return redirect("/login", { headers });
+export const clientLoader = () => {
+    return redirect("/login");
 };

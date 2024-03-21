@@ -1,5 +1,5 @@
 import { MetaFunction } from "@remix-run/node";
-import SubMenu from "~/routes/_app/submenu";
+import SubMenu from "~/components/layout/submenu";
 
 export const meta: MetaFunction = () => {
     return [{ title: "連結決算" }];

@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
-import SubMenu from "~/routes/_app/submenu";
+import SubMenu from "~/components/layout/submenu";
 
-export const loader = () => {
+export const clientLoader = () => {
     const submenuList = [
         { name: "基本設定", href: "/master" },
         { name: "収集プロジェクト", href: "/master/core" },
@@ -12,7 +12,7 @@ export const loader = () => {
 };
 
 export default function Master() {
-    const { submenuList } = useLoaderData<typeof loader>();
+    const { submenuList } = useLoaderData<typeof clientLoader>();
 
     return (
         <div className="flex h-full">

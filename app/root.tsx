@@ -4,16 +4,19 @@ import {
     Outlet,
     Scripts,
     ScrollRestoration,
+    useLocation,
+    useRouteLoaderData,
 } from "@remix-run/react";
-import styles from "./tailwind.css?url";
+import "./tailwind.css";
+import Header from "./components/layout/header";
 
-export const links = () => {
-    return [{ rel: "stylesheet", href: styles }];
-};
+export function Layout({ children }: { children: React.ReactNode }) {
+    const location = useLocation();
 
-export default function App() {
+    const data = useRouteLoaderData<typeof clientLoader>("root");
+
     return (
-        <html lang="ja">
+        <html lang="en">
             <head>
                 <meta charSet="utf-8" />
                 <meta
@@ -23,11 +26,45 @@ export default function App() {
                 <Meta />
                 <Links />
             </head>
-            <body className="font-sans">
-                <Outlet />
+            <body>
+                {location.pathname === "/login" ? (
+                    <Outlet />
+                ) : (
+                    <div className="flex flex-col h-screen">
+                        <div>
+                            <Header menuList={data?.menuList ?? []} />
+                        </div>
+
+                        <div className="flex-grow">{children}</div>
+                    </div>
+                )}
                 <ScrollRestoration />
                 <Scripts />
             </body>
         </html>
     );
+}
+
+export const clientLoader = () => {
+    const menuList = [
+        { name: "ダッシュボード", href: "/" },
+        { name: "マスタ", href: "/master" },
+        {
+            name: "データ入力",
+            href: "/core",
+        },
+        { name: "連結決算", href: "/consolidates" },
+        // { name: "レポート", href: "/reports" },
+
+        // { name: "設定", href: "/settings" },
+    ];
+    return { menuList };
+};
+
+export default function App() {
+    return <Outlet />;
+}
+
+export function HydrateFallback() {
+    return <p>Loading...</p>;
 }

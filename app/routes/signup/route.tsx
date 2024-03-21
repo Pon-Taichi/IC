@@ -5,17 +5,14 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { validate } from "./validate";
-import { createClient } from "~/utils/supabase.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-    const headers = new Headers();
-    const supabase = createClient(request, headers);
-
     const formData = await request.formData();
     const email = String(formData.get("email"));
     const password = String(formData.get("password"));
     const passwordCheck = String(formData.get("password-check"));
 
+    // eslint-disable-next-line prefer-const
     let errors: {
         email?: string;
         password?: string;
@@ -25,23 +22,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
     if (errors) return errors;
 
-    const { error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-            emailRedirectTo: process.env.SUPABASE_REDIRECT_URL,
-            data: {
-                tenant: 1,
-            },
-        },
-    });
-
-    if (error) {
-        errors = { supabase: error.message };
-        return errors;
-    }
-
-    return redirect("/signup/success", { headers });
+    return redirect("/signup/success");
 };
 
 export default function Signup() {
